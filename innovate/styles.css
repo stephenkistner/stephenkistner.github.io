@@ -1,0 +1,518 @@
+.container_12 {
+	overflow: hidden;
+}
+
+
+.parallax {
+	 height: 700px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+::selection {
+  background: #ffe84c; 
+}
+::-moz-selection {
+  background: #ffe84c;
+  }
+
+a {
+	text-decoration: none;
+	color: #f13d25;
+	transition: background .3s ease-in;
+}
+
+a:hover {
+	background: #ffe84c;
+
+}
+
+h1 {
+	font-family: 'Karben', sans-serif;
+	font-size: 100px;
+	text-transform: uppercase;
+	margin-top: 100px;
+	margin-bottom: 30px;
+	line-height: 100px;
+	z-index: 10;
+	display: block;
+	background-color: #fff;
+	padding: 5px 10px;
+}
+
+h2 {
+	font-family: 'Mackinac', serif;
+	font-size: 30px;
+	font-style: italic;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+h3 {
+	font-family: 'Mackinac', serif;
+	font-size: 24px;
+	line-height: 36px;
+	font-style: italic;
+	font-weight: bold;
+	margin-bottom: 36px;
+	color: #575757;
+}
+
+p {
+	font-family: 'Mackinac', serif;
+	font-size: 14px;
+	line-height: 36px;
+	margin-bottom: 45px;
+}
+
+p.lead {
+	font-style: italic;
+}
+
+ hr {
+	border: 2px dotted #000;
+    border-style: none none dotted; 
+}
+
+h4 {
+	font-size: 14px;
+	font-family: 'Unica', Helvetica, sans-serif;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.byline {
+	font-size: 14.5px;
+	font-family: 'Mackinac', serif;
+	font-style: italic;
+}
+
+p span.byline {
+	font-size: 12px;
+}
+
+p.pullquote {
+	font-family: 'Karben', sans-serif;
+	font-style: italic;
+	font-size: 23px;
+	line-height: 36px;
+	width: 200px;
+	margin-top: 72px;
+	margin-right: -30px;
+	text-align: right;
+}
+
+.bg-image {
+	z-index: 1;
+	margin-top: -500px;
+	margin-bottom: 300px;
+}
+
+.img-inline {
+	margin-bottom: 36px;
+}
+
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fadeIn {
+    opacity:0; 
+    -webkit-animation:fadeIn ease 1;  
+    -moz-animation:fadeIn ease 1;
+    animation:fadeIn ease 1;
+
+    -webkit-animation-fill-mode:forwards;
+    -moz-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+
+    -webkit-animation-duration:1s;
+    -moz-animation-duration:1s;
+    animation-duration:1s;
+}
+
+.fadeIn.fOne {
+-webkit-animation-delay: 0.3s;
+-moz-animation-delay: 0.3s;
+animation-delay: 0.3s;
+}
+
+.fadeIn.fTwo {
+-webkit-animation-delay: .8s;
+-moz-animation-delay:.8s;
+animation-delay: .8s;
+}
+
+.fadeIn.fThree {
+-webkit-animation-delay: 1.3s;
+-moz-animation-delay: 1.3s;
+animation-delay: 1.3s;
+}
+
+.fadeIn.fFour {
+-webkit-animation-delay: 2.2s;
+-moz-animation-delay: 2.2;
+animation-delay: 2.2;
+}
+
+.fadeIn.fFive {
+-webkit-animation-delay: 2.7s;
+-moz-animation-delay: 2.7s;
+animation-delay: 2.7s;
+}
+
+
+
+#nav {
+	position: fixed;
+	margin-top: 10%;
+	background: #fff;
+	padding: 30px 10px 0px 20px;
+	width: 170px;
+	margin-left: -10px;
+	list-style: none;
+	transition: opacity .2s ease-out;
+}
+
+
+
+.navOn {
+	opacity: 1;
+}
+
+.navOff {
+	opacity: 0;
+}
+
+#nav li {
+	margin-bottom: 28px;
+}
+
+#nav li a {
+	font-family: 'Unica', Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	color: #000;
+	line-height: 26px;
+	font-weight: bold;
+	transition: background 0.3s ease-in, color 0.8s ease;
+}
+
+#nav li a:hover {
+	background: #ffe84c;
+
+}
+
+#nav li a span {
+	text-transform: none;	
+	margin: -30px 0 -10px 0;
+	display: block;
+	font-family: 'Mackinac', serif;	
+	font-style: italic;
+	color: #fff;
+	font-weight: normal;
+	transition: color .5s ease-in .3s;
+	background: none;
+}
+
+#nav li a.linkActive {
+	color: #f13d25;
+	text-transform: uppercase;
+}
+
+#nav li a.linkActive:hover {
+	background: none;
+}
+
+#nav li a.linkActive span {
+	color: #646464;
+}
+
+.paraTitle {
+	background-image: url(images/intro.jpg);
+	height: 900px;
+}
+
+#title {
+	margin-bottom: 200px;
+	/*background: url(images/intro.jpg) no-repeat right top;
+	background-size: 530px auto;*/
+}
+
+#title h1 {
+	margin-top: 0px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+#title h2, #title p {
+	background: #fff;
+	padding: 10px;
+}
+
+#title p {
+	line-height: 15px;
+}
+
+#intro {
+	margin-bottom: 200px;
+}
+
+.paraMiddle {
+	background-image: url(images/middle.jpg);
+	height: 1200px;
+}
+
+#whoFade {
+	height: 50px;
+}
+
+#who {
+	margin-top: 100px;
+	margin-bottom: 200px;
+}
+
+#who h4 span {
+	text-transform: none;
+	font-weight: normal;
+	font-size: 13px;
+	color: #646464;
+}
+
+#whotext1 {
+	margin: 0;
+	opacity: 0;
+	transition: opacity .7s ease-in;
+}
+
+#whotext2 {
+	margin: 0;
+	opacity: 0;
+	transition: opacity .7s ease-in .3s;
+}
+
+#whotext3 {
+	margin: 0;
+	opacity: 0;
+	transition: opacity .7s ease-in .6s;
+}
+
+.paraCities {
+	background-image: url(images/cities.jpg);
+}
+
+.paraCities h1 {
+	margin-top: 300px;
+}
+
+#cities {
+	margin-bottom: 200px;
+}
+
+#cities img {
+	display: inline;
+}
+
+
+#cities h3 {
+	margin-top: 100px;
+}
+
+
+#triggershift1, #triggershift2, #triggershift3 {
+	height: 80px;
+}
+
+#toShift {
+		margin-top: -50px;
+}
+
+.carBase {
+	margin-left: -600px;
+}
+
+.carShift1 {
+	margin-left: -400px;
+}
+
+.carShift2 {
+	margin-left: -200px;
+}
+
+.carShift3 {
+	margin-left: 0px;
+}
+
+.shiftBase {
+	margin-left: 1200px;
+}
+
+.shift1 {
+	margin-left: 1000px;
+}
+
+.shift2 {
+	margin-left: 700px;
+}
+
+.shift3 {
+	margin-left: 240px;
+}
+
+.busStart {
+	margin-left: 200px;
+}
+
+.busBuffer {
+	height: 10px;
+}
+
+.busPos1 {
+	margin-left: 250px;
+}
+
+.busPos2 {
+	margin-left: 300px;
+}
+
+.busPos3 {
+	margin-left: 350px;
+}
+
+#expanding {
+	margin-bottom: 75px;
+}
+
+#triggerexp1, #triggerexp2 {
+	height: 20px;
+}
+#triggerexp1 {
+	margin-top: 200px;
+}
+
+.exp1 {
+	letter-spacing: 15px;
+}
+
+.exp2 {
+	letter-spacing: 45px;
+}
+
+.exp3{
+	letter-spacing: 70px;
+}
+
+
+.paraClosing {
+	background-image: url(images/closing.jpg);
+	height: 900px;
+}
+
+
+
+
+
+
+
+.jcarousel {
+    position: relative;
+    overflow: hidden;
+    width: 780px;
+    z-index: 1;
+}
+
+/*
+This is the container of the carousel items.
+You must ensure that the position is relative or absolute and
+that the width is big enough to contain all items.
+*/
+.jcarousel ul {
+    width: 20000em;
+    position: relative;
+
+    /* Optional, required in this case since it's a <ul> element */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: -100px;
+}
+
+/*
+These are the item elements. jCarousel works best, if the items
+have a fixed width and height (but it's not required).
+*/
+.jcarousel li {
+	margin-right: 500px;
+    /* Required only for block elements like <li>'s */
+    float: left;
+}
+
+.jcarousel li h4 {
+	text-transform: uppercase;
+}
+
+.jcarousel li hr.hrSmall {
+	border: 2px; dotted #000;
+	border-style: none none dotted;
+	margin-top: -30px;
+}
+
+.jcarousel-control-prev, .jcarousel-control-next {
+	font-size: 12px;
+	text-transform: uppercase;
+}
+
+.jcarousel-pagination {
+	display: block;
+	margin: 0px -50px 0 20px;
+	z-index: 5;
+	width: 130px;
+	line-height: 20px;
+}
+
+.jcarousel-pagination a {
+	background: #ffe84c;
+	font-family: 'Unica', Helvetica, Arial, sans-serif;
+	color: #000;
+	font-size: 9px;
+	text-align: center;
+	display: inline-block;
+	margin: 5px 5px;
+	width: 18px;
+	height: 18px;
+	transition: background .3s ease-out .3s, color .3s ease-out .3s;
+	line-height: 20px;
+}
+
+.jcarousel-pagination a.active {
+	background: #f13d25;
+	color: #fff;
+}
+
+#sliderNav {
+	text-align: center;
+	display: block;
+	width: 155px;
+}
+
+#footer {
+	position: fixed;
+	bottom: 0px;
+	background: #fff;
+	padding: 10px 10px 0px 20px;
+	width: 200px;
+	margin-left: -10px;
+	list-style: none;
+	transition: opacity .5s ease-out;
+}
+
+#footer p {
+		font-family: 'Unica', Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 0 0 10px 0;
+	line-height: 13px;
+	font-style: italic;
+	color: #646464;
+}
+
