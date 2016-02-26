@@ -9,7 +9,7 @@ var posExX, posExY, posGenX, posGenY, posDayX,posDayY;
 var wiggleX, wiggleY, wiggleX1, wiggleY1, t = 0;
 
 var string1 = "in nature";
-var string2 = "there are no grids";
+var string2 = "there are";
 
 var noiseScale = 100;
 
