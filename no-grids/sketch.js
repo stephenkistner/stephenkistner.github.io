@@ -19,7 +19,7 @@ var calibre;
 
 var wiggleL;
 
-var wiggleMax = 100;
+var wiggleMaxX, wiggleMaxY = 100;
 
 function preload() {
   imgN = loadImage("assets/N.png");
@@ -47,39 +47,39 @@ function draw() {
   rect(0,0,width,height);
 scaler=width*height/5000000;
 wiggleX = noise(t);
-wiggleX = map(wiggleX,0,1,0,wiggleMax);
+wiggleX = map(wiggleX,0,1,0,wiggleMaxX);
 wiggleY = noise(t,10);
-wiggleY = map(wiggleY,0,1,0,wiggleMax);
+wiggleY = map(wiggleY,0,1,0,wiggleMaxY);
   image(imgN, startX+wiggleX, startY+wiggleY,imgN.width*scaler,imgN.height*scaler);
 wiggleX = noise(t,11);
-wiggleX = map(wiggleX,0,1,0,wiggleMax);
+wiggleX = map(wiggleX,0,1,0,wiggleMaxX);
 wiggleY = noise(t,12);
-wiggleY = map(wiggleY,0,1,0,wiggleMax);
+wiggleY = map(wiggleY,0,1,0,wiggleMaxY);
    image(imgO, startX+1000*scaler+wiggleX, startY+wiggleY,imgO.width*scaler,imgO.height*scaler);
 wiggleX = noise(t,13);
-wiggleX = map(wiggleX,0,1,0,wiggleMax);
+wiggleX = map(wiggleX,0,1,0,wiggleMaxX);
 wiggleY = noise(t,14);
-wiggleY = map(wiggleY,0,1,0,wiggleMax);
+wiggleY = map(wiggleY,0,1,0,wiggleMaxY);
   image(imgG, startX+wiggleX, startY+1500*scaler+wiggleY,imgG.width*scaler,imgG.height*scaler);
 wiggleX = noise(t,15);
-wiggleX = map(wiggleX,0,1,0,wiggleMax);
+wiggleX = map(wiggleX,0,1,0,wiggleMaxX);
 wiggleY = noise(t,16);
-wiggleY = map(wiggleY,0,1,0,wiggleMax);
+wiggleY = map(wiggleY,0,1,0,wiggleMaxY);
   image(imgR, startX+1000*scaler+wiggleX, startY+800*scaler+wiggleY,imgR.width*scaler,imgR.height*scaler);
 wiggleX = noise(t,17);
-wiggleX = map(wiggleX,0,1,0,wiggleMax);
+wiggleX = map(wiggleX,0,1,0,wiggleMaxX);
 wiggleY = noise(t,18);
-wiggleY = map(wiggleY,0,1,0,wiggleMax);
+wiggleY = map(wiggleY,0,1,0,wiggleMaxY);
   image(imgS, startX+4.2*1000*scaler+wiggleX, startY+800*scaler+wiggleY,imgS.width*scaler,imgS.height*scaler);
 wiggleX = noise(t,19);
-wiggleX = map(wiggleX,0,1,0,wiggleMax);
+wiggleX = map(wiggleX,0,1,0,wiggleMaxX);
 wiggleY = noise(t,20);
-wiggleY = map(wiggleY,0,1,0,wiggleMax);
+wiggleY = map(wiggleY,0,1,0,wiggleMaxY);
   image(imgI, startX+2*1000*scaler+wiggleX, startY+800*scaler+wiggleY,imgI.width*scaler,imgI.height*scaler);
 wiggleX = noise(t,21);
-wiggleX = map(wiggleX,0,1,0,wiggleMax);
+wiggleX = map(wiggleX,0,1,0,wiggleMaxX);
 wiggleY = noise(t,22);
-wiggleY = map(wiggleY,0,1,0,wiggleMax);
+wiggleY = map(wiggleY,0,1,0,wiggleMaxY);
   image(imgD, startX+2.7*1000*scaler+wiggleX, startY+800*scaler+wiggleY,imgD.width*scaler,imgD.height*scaler);
 
   
@@ -114,7 +114,8 @@ wiggleY = map(wiggleY,0,1,0,wiggleMax);
   t+=0.002;
   
   
- wiggleMax = map(mouseX,0,width,-500,500);
+ wiggleMaxX = map(mouseX,0,width,-500,1500);
+  wiggleMaxY = map(mouseY,0,width,-500,1500);
   
   
 }
