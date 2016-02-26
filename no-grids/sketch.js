@@ -82,6 +82,8 @@ wiggleY = noise(t,22);
 wiggleY = map(wiggleY,0,1,0,wiggleMaxY);
   image(imgD, startX+2.7*1000*scaler+wiggleX, startY+800*scaler+wiggleY,imgD.width*scaler,imgD.height*scaler);
 
+fill(0,map(frameCount,100,500,255,0));
+rect(0,0,width,height);
   
   noStroke();
   fill(255);
@@ -97,11 +99,14 @@ wiggleY = map(wiggleY,0,1,0,wiggleMaxY);
   wiggleX1 = map(wiggleX1,0,1,0+textWidth(string2),width-2*textWidth(string2));
   wiggleY1 = noise(t,7);
   wiggleY1 = map(wiggleY1,0,1,height/2,height);
+  
   textAlign(LEFT);
   text(string2, wiggleX1, wiggleY1);
   noFill();
   strokeWeight(2);
   stroke(255);
+  
+  
   
 
     line1Offset = 20;
