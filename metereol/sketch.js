@@ -54,10 +54,10 @@ function draw() {
   textSizeUpdate();
   background(colorTime);
   shadow();
-  image(shadowBuffer,0,0,windowWidth,windowHeight);
+  //image(shadowBuffer,0,0,windowWidth,windowHeight);
   makeWaves();
 
- var cloudCount = map(cloudAmt,0,100,0,30);
+ var cloudCount = map(cloudAmt,0,100,0,20);
  
  if (textIsGood) {
    if (cloudAmt>20) {
@@ -89,7 +89,7 @@ function draw() {
 //PARSE WEATHER DATA
 function gotWeather(weather) {
   temperature = weather.main.temp;
-  
+
   cloudAmt = weather.clouds.all;
   
   displayText = weather.name;
@@ -158,17 +158,17 @@ function colorSys() {
 
 //DRAW TEXT SHADOW
 function shadow() {
-  shadowBuffer = createGraphics(windowWidth,windowHeight);
-  shadowBuffer.pixelDensity(2);
-  shadowBuffer.textSize(textSizeFinal);
-  shadowBuffer.textFont(calibre);
-    textAlign(CENTER,CENTER);
-  shadowBuffer.stroke(colorTimeInv);
-  shadowBuffer.fill(colorTime);
-  shadowBuffer.strokeWeight(2.5);
+  //shadowBuffer = createGraphics(windowWidth,windowHeight);
+  //shadowBuffer.pixelDensity(2);
+  textSize(textSizeFinal);
+  textFont(calibre);
+  textAlign(CENTER,CENTER);
+  stroke(colorTimeInv);
+  fill(colorTime);
+ strokeWeight(2.5);
   
   for (var i=12; i>=0; i-=3) {
-    shadowBuffer.text(displayText,shadowBuffer.width/2+i*.9,shadowBuffer.height/2+i*1.8);
+    text(displayText,windowWidth/2+i*.9,windowHeight/2+i*1.8);
   }
   
   noStroke();
@@ -187,44 +187,14 @@ function makeWaves() {
   textAlign(CENTER,CENTER);
   textMask.text(displayText,textMask.width/2,textMask.height/2);
 
-    wave3 = createGraphics(windowWidth*density,windowHeight*density);
-    wave3.beginShape();
-    wave3.fill(color3);
-    wave3.noStroke();
-    wave3.vertex(0,height/2);
-    //wave.curveVertex(0,-height/2);
-    for (i=-10; i<=windowWidth; i+=windowWidth*freq) {
-      var yPos = map(noise(i),0,1,waveUpper,waveLower);
-       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
-      wave3.curveVertex(i,yPos+delta);
-    }
-    wave3.vertex(width,height+20);
-    wave3.vertex(-20,height+20);
-    wave3.endShape(CLOSE);
-    
-    wave2 = createGraphics(windowWidth*density,windowHeight*density);
-    wave2.beginShape();
-    wave2.fill(color2);
-    wave2.noStroke();
-    wave2.vertex(0,height/2);
-    //wave.curveVertex(0,-height/2);
-    for ( i=-10; i<=windowWidth; i+=windowWidth*freq) {
-       yPos = map(noise(i),0,1,waveUpper,waveLower);
-       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
-      wave2.curveVertex(i,yPos+delta);
-    }
-    wave2.vertex(width,height+20);
-    wave2.vertex(-20,height+20);
-    wave2.endShape(CLOSE);
-    
-    wave = createGraphics(windowWidth*density,windowHeight*density);
+  wave = createGraphics(windowWidth*density,windowHeight*density);
     wave.beginShape();
-    wave.fill(color1);
+    wave.fill(color3);
     wave.noStroke();
     wave.vertex(0,height/2);
     //wave.curveVertex(0,-height/2);
-    for ( i=-10; i<=windowWidth; i+=windowWidth*freq) {
-       yPos = map(noise(i),0,1,waveUpper,waveLower);
+    for (i=-10; i<=windowWidth; i+=windowWidth*freq) {
+      var yPos = map(noise(i),0,1,waveUpper,waveLower);
        delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
       wave.curveVertex(i,yPos+delta);
     }
@@ -232,14 +202,38 @@ function makeWaves() {
     wave.vertex(-20,height+20);
     wave.endShape(CLOSE);
     
+    wave.beginShape();
+    wave.fill(color2);
+    wave.noStroke();
+    wave.vertex(0,height/2+waveOffset);
+    for ( i=-10; i<=windowWidth; i+=windowWidth*freq) {
+       yPos = map(noise(i),0,1,waveUpper,waveLower);
+       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
+      wave.curveVertex(i,yPos+delta+waveOffset);
+    }
+    wave.vertex(width,height+20+waveOffset);
+    wave.vertex(-20,height+20+waveOffset);
+    wave.endShape(CLOSE);
+    
+    wave.beginShape();
+    wave.fill(color1);
+    wave.noStroke();
+    wave.vertex(0,height/2+waveOffset*2);
+    for ( i=-10; i<=windowWidth; i+=windowWidth*freq) {
+       yPos = map(noise(i),0,1,waveUpper,waveLower);
+       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
+      wave.curveVertex(i,yPos+delta+waveOffset*2);
+    }
+    wave.vertex(width,height+20+waveOffset*2);
+    wave.vertex(-20,height+20+waveOffset*2);
+    wave.endShape(CLOSE);
+    
     t+=.01;
     
   toMask = createGraphics(windowWidth*2,windowHeight*2);
   toMask.pixelDensity(density);
   toMask.background(colorBase);
-  toMask.image(wave3,0,0,windowWidth,windowHeight);
-  toMask.image(wave2,0,waveOffset,windowWidth,windowHeight);
-  toMask.image(wave,0,waveOffset*2,windowWidth,windowHeight);
+  toMask.image(wave,0,0,windowWidth,windowHeight);
 
   var toMaskImg = toMask.get();
   toMaskImg.mask(textMask._renderer);
@@ -251,12 +245,12 @@ function makeWaves() {
   
   
   function Cloud(xPos,yPos) {
-    this.x = xPos+random(-100,windowWidth);
-    this.y = yPos+random(windowHeight/2-textSizeFinal*.63,windowHeight/2+textSizeFinal*.3);
+    this.x = xPos+random(-200,windowWidth);
+    this.y = yPos+random(windowHeight/2-textSizeFinal*.83,windowHeight/2+textSizeFinal*.4);
     
     this.drawCloud = function() {
-    this.cloudLength = random(windowWidth*.009,windowWidth*.2);
-    this.cloudSize= random(textSizeFinal*.08,textSizeFinal*.3);
+    this.cloudLength = random(windowWidth*.009,windowWidth*.4);
+    this.cloudSize= random(textSizeFinal*.1,textSizeFinal*.5);
       strokeCap(ROUND);
       stroke(cloudShadow);
       strokeWeight(this.cloudSize);
@@ -270,7 +264,7 @@ function makeWaves() {
     }
    
     this.move = function() {
-      this.x=this.x + 2 ;
+      this.x=this.x + map(this.cloudSize,80,0,0,2) ;
       if (this.x >windowWidth) {
         this.x = random(-400,-200);
       }
