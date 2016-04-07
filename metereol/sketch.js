@@ -1,7 +1,8 @@
 var density = 1;
 
 //WEATHER DATA VARS
-var zip = 58501;
+var zip = 85001;
+var weather, url;
 var temperature, cloudAmt;
 var sunriseDate,sunriseHours,sunsetDate,sunsetHours,dataDate,dataHours;
 var nighttime = false;
@@ -13,6 +14,9 @@ var displayText = 'NEW YORK';
 var textIsGood = false;
 //COLOR VARS
 var color1,color2,color3,colorBase,colorTime,colorTimeInv,cloudShadow;
+
+//SHADOW VARS
+var shadowBuffer;
 
 //WAVEFORM VARS
 var textMask, toMask;
@@ -29,36 +33,41 @@ var clouds = [];
 
 function preload() {
   calibre = loadFont('assets/Calibre-Black.otf');
-  var url = 'http://api.openweathermap.org/data/2.5/weather?zip=' + zip + '&units=imperial&APPID=dbc1eb3f8bcd39cf9ae676b83e2e514c';
+  url = 'http://api.openweathermap.org/data/2.5/weather?zip=' + zip + '&units=imperial&APPID=dbc1eb3f8bcd39cf9ae676b83e2e514c';
   loadJSON(url, gotWeather);
 }
 
 function setup() {
   pixelDensity(density);
   createCanvas(windowWidth*density,windowHeight*density);
+  frameRate(60);
+  colorSys();
 }
 
 function draw() {
-  colorSys();
+  var minutes = minute();
+  if (frameCount === 0 || minutes === 0) {
+    colorSys();
+    gotWeather();
+  }
+  
   textSizeUpdate();
   background(colorTime);
   shadow();
+  image(shadowBuffer,0,0,windowWidth,windowHeight);
   makeWaves();
 
- var cloudCount = map(cloudAmt,0,100,0,20);
+ var cloudCount = map(cloudAmt,0,100,0,30);
  
  if (textIsGood) {
    if (cloudAmt>20) {
-   if (clouds.length < cloudCount){
-  
+  if (clouds.length < cloudCount){
   for (var i=0; i<=cloudCount; i++) {
-    
-    
     clouds.push(new Cloud(random(0,windowWidth),0));
     }
   }
   for (var i=0; i<cloudCount; i++) {
-    randomSeed(i+100);
+    randomSeed(i);
     clouds[i].drawCloud();
     clouds[i].move();
   }
@@ -92,9 +101,7 @@ function gotWeather(weather) {
   sunsetHours = sunsetDate.getHours();
   dataDate = new Date(weather.dt*1000);
   dataHours = dataDate.getHours() ;
-  //dataHours = 0.15;
-  
-  print(cloudAmt);
+  dataHours = 0.15;
 }
 
 
@@ -102,7 +109,7 @@ function gotWeather(weather) {
 
 
 function colorSys() {
-  cloudShadow = color(0,220);
+  cloudShadow = color(0);
   
   if (sunriseHours<dataHours && dataHours<sunsetHours) {
     colorTime = color(255);
@@ -151,15 +158,17 @@ function colorSys() {
 
 //DRAW TEXT SHADOW
 function shadow() {
-  textSize(textSizeFinal);
-  textFont(calibre);
-  textAlign(CENTER,CENTER);
-  stroke(colorTimeInv);
-  fill(colorTimeInv);
-  strokeWeight(2.5);
+  shadowBuffer = createGraphics(windowWidth,windowHeight);
+  shadowBuffer.pixelDensity(2);
+  shadowBuffer.textSize(textSizeFinal);
+  shadowBuffer.textFont(calibre);
+    textAlign(CENTER,CENTER);
+  shadowBuffer.stroke(colorTimeInv);
+  shadowBuffer.fill(colorTime);
+  shadowBuffer.strokeWeight(2.5);
   
-  for (var i=36; i>=0; i-=3) {
-    text(displayText,windowWidth/2+i*.9,windowHeight/2+i*1.8);
+  for (var i=12; i>=0; i-=3) {
+    shadowBuffer.text(displayText,shadowBuffer.width/2+i*.9,shadowBuffer.height/2+i*1.8);
   }
   
   noStroke();
@@ -242,7 +251,7 @@ function makeWaves() {
   
   
   function Cloud(xPos,yPos) {
-    this.x = xPos+random(-300,windowWidth);
+    this.x = xPos+random(-100,windowWidth);
     this.y = yPos+random(windowHeight/2-textSizeFinal*.63,windowHeight/2+textSizeFinal*.3);
     
     this.drawCloud = function() {
@@ -261,9 +270,9 @@ function makeWaves() {
     }
    
     this.move = function() {
-      this.x=this.x + map(this.cloudSize,0,1000,0,20) ;
+      this.x=this.x + 2 ;
       if (this.x >windowWidth) {
-        this.x = -300;
+        this.x = random(-400,-200);
       }
     }
   }
