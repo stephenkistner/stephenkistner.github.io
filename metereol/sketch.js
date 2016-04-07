@@ -1,7 +1,7 @@
 var density = 1;
 
 //WEATHER DATA VARS
-var zip = 85001;
+var zip = 21217;
 var weather, url;
 var temperature, cloudAmt;
 var sunriseDate,sunriseHours,sunsetDate,sunsetHours,dataDate,dataHours;
@@ -66,8 +66,8 @@ function draw() {
     clouds.push(new Cloud(random(0,windowWidth),0));
     }
   }
-  for (var i=0; i<cloudCount; i++) {
-    randomSeed(i);
+  for ( i=0; i<cloudCount; i++) {
+    randomSeed(i*10);
     clouds[i].drawCloud();
     clouds[i].move();
   }
@@ -101,7 +101,7 @@ function gotWeather(weather) {
   sunsetHours = sunsetDate.getHours();
   dataDate = new Date(weather.dt*1000);
   dataHours = dataDate.getHours() ;
-  dataHours = 0.15;
+  //dataHours = 0.15;
 }
 
 
@@ -109,7 +109,7 @@ function gotWeather(weather) {
 
 
 function colorSys() {
-  cloudShadow = color(0);
+  cloudShadow = color(0,220);
   
   if (sunriseHours<dataHours && dataHours<sunsetHours) {
     colorTime = color(255);
@@ -177,7 +177,7 @@ function shadow() {
 
 //DRAW INNER WAVES
 function makeWaves() {
-  
+
   textMask =  createGraphics(windowWidth,windowHeight);
   textMask.pixelDensity(2);
   textMask.noStroke();
@@ -245,12 +245,12 @@ function makeWaves() {
   
   
   function Cloud(xPos,yPos) {
-    this.x = xPos+random(-200,windowWidth);
-    this.y = yPos+random(windowHeight/2-textSizeFinal*.83,windowHeight/2+textSizeFinal*.4);
+    this.x = xPos+random(-500,windowWidth);
+    this.y = yPos+random(windowHeight/2-textSizeFinal*.83,windowHeight/2+textSizeFinal*.55);
+    this.cloudLength = random(windowWidth*.009,windowWidth*.2);
+    this.cloudSize= random(textSizeFinal*.1,textSizeFinal*.5);
     
     this.drawCloud = function() {
-    this.cloudLength = random(windowWidth*.009,windowWidth*.4);
-    this.cloudSize= random(textSizeFinal*.1,textSizeFinal*.5);
       strokeCap(ROUND);
       stroke(cloudShadow);
       strokeWeight(this.cloudSize);
@@ -264,7 +264,7 @@ function makeWaves() {
     }
    
     this.move = function() {
-      this.x=this.x + map(this.cloudSize,80,0,0,2) ;
+      this.x=this.x + map(this.cloudSize,0,80,0,windowWidth*.001) ;
       if (this.x >windowWidth) {
         this.x = random(-400,-200);
       }
