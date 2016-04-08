@@ -4,9 +4,10 @@ var density = 1;
 var initBTN;
 var initSketch = false;
 var zipInput;
+var weatherReloaded = false;
 
 //WEATHER DATA VARS
-var zip = 90210;
+var zip = 10012;
 var weather, url;
 var temperature, cloudAmt;
 var sunriseDate,sunriseHours,sunsetDate,sunsetHours,dataDate,dataHours;
@@ -54,36 +55,49 @@ function openINIT() {
   initBTN = createButton("GET WEATHER");
   //initBTN.position(windowWidth/2,windowHeight/2);
   initBTN.addClass('initBTN')
-  initBTN.mousePressed(runSketch);
+  initBTN.mousePressed(reloadWeather);
 }
 
 function setup() {
   pixelDensity(density);
   createCanvas(windowWidth*density,windowHeight*density);
   frameRate(40);
-  //colorSys();
+  colorSys();
   openINIT();
 }
 
-function runSketch() {
-  ;
-  //initBTN.addClass('hidden');
+function reloadWeather() {
   zip = zipInput.value();
   url = 'http://api.openweathermap.org/data/2.5/weather?zip=' + zip + '&units=imperial&APPID=dbc1eb3f8bcd39cf9ae676b83e2e514c';
   loadJSON(url, gotWeather);
-  initSketch = true
-  gotWeather();
+}
+
+function runSketch() {
+  if (weatherReloaded) {
+    textIsGood = false;
+    cloudsSmall.splice(0,cloudsSmall.length);
+    cloudsLarge.splice(0,cloudsLarge.length);
+    
   shadowRefresh = true;
+  initSketch = true;
+  //initBTN.addClass('hidden');
+  
+  
+  //gotWeather();
+  shadowRefresh = true;
+  }
 }
 
 function draw() {
+  colorSys();
   print(displayText);
   if (initSketch) {
   textSizeUpdate();
-  background(colorTime);
+  
   
   if (textIsGood) {
-  
+  fill(colorTime);
+  rect(-10,-10,windowWidth*1.1,windowHeight*1.1);
   var minutes = minute();
   if (minutes === 0) {
     colorSys();
@@ -154,8 +168,11 @@ function gotWeather(weather) {
   sunsetHours = sunsetDate.getHours();
   dataDate = new Date(weather.dt*1000);
   dataHours = dataDate.getHours() ;
-  //dataHours = 0.15;
-    //colorSys();
+  dataHours = 12;
+    colorSys();
+    
+    weatherReloaded = true;
+    runSketch();
 }
 
 
@@ -188,7 +205,7 @@ function colorSys() {
     color3 = color(255,248,0);
     color2 = color(195,252,114);
     color1 = color(136,255,227);
-    colorBase = color(colorTime);
+    colorBase = colorTime;
     wiggleAmt = map(temperature,-30,60,0.5,0.01);
     freq = map(temperature,40,60,.06,.085);
   }
@@ -196,7 +213,7 @@ function colorSys() {
     color1 = color(255,66,0);
     color2 = color(255,157,0);
     color3 = color(255,248,0);
-    colorBase = color(colorTime);
+    colorBase = colorTime;
     wiggleAmt  = map(temperature,60,120,0.01,0.3);
     freq = map(temperature,60,120,.085,.02);
   }
@@ -262,17 +279,30 @@ function shadow() {
   shadowBuffer.textSize(textSizeFinal);
   shadowBuffer.textFont(calibre);
   textAlign(CENTER,CENTER);
+  shadowBuffer.strokeWeight(2.5);
+  if (sunriseHours<dataHours && dataHours<sunsetHours) {
+    //daylight
+    shadowBuffer.stroke(colorTimeInv);
+    shadowBuffer.fill(colorTimeInv);
+    for (var i=50; i>=0; i-=1) {
+      if (i===0) {
+        shadowBuffer.strokeWeight(3.5);
+      }
+      shadowBuffer.text(displayText,windowWidth/2+i*.9,windowHeight/2+i*1.8);
+    }
+  }
+  else if (dataHours<sunriseHours || dataHours>sunsetHours) {
+    //nighttime
   shadowBuffer.stroke(colorTimeInv);
   shadowBuffer.fill(colorTime);
-  shadowBuffer.strokeWeight(2.5);
-  
   for (var i=12; i>=0; i-=3) {
     if (i===0) {
       shadowBuffer.noStroke();
     }
     shadowBuffer.text(displayText,windowWidth/2+i*.9,windowHeight/2+i*1.8);
   }
-  
+  }
+
   noStroke();
   
   toMask = createGraphics(windowWidth*2,windowHeight*2);
@@ -344,7 +374,7 @@ function makeWaves() {
     this.y = yPos+random(windowHeight/2-textSizeFinal*.7*cloudScale,windowHeight/2+textSizeFinal*.5*cloudScale);
     this.cloudShadowOn = cloudShadowOn;
     this.cloudLength = random(windowWidth*.0009*cloudScale,windowWidth*.2*cloudScale);
-    this.cloudSize= random(textSizeFinal*.4*cloudScale,textSizeFinal*.55*cloudScale);
+    this.cloudSize= random(textSizeFinal*.3*cloudScale,textSizeFinal*.4*cloudScale);
     
     this.drawCloud = function() {
       strokeCap(ROUND);
