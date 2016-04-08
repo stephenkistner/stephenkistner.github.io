@@ -1,7 +1,10 @@
 var density = 1;
 
+//INTERFACE 
+var initBTN;
+
 //WEATHER DATA VARS
-var zip = 21217;
+var zip = 90210;
 var weather, url;
 var temperature, cloudAmt;
 var sunriseDate,sunriseHours,sunsetDate,sunsetHours,dataDate,dataHours;
@@ -9,7 +12,7 @@ var nighttime = false;
 
 //TYPOGRAPHY VARS
 var calibre;
-var textSizeFinal = 400;
+var textSizeFinal = 300;
 var displayText = 'NEW YORK';
 var textIsGood = false;
 //COLOR VARS
@@ -17,9 +20,10 @@ var color1,color2,color3,colorBase,colorTime,colorTimeInv,cloudShadow;
 
 //SHADOW VARS
 var shadowBuffer;
+var shadowRefresh = true;
 
 //WAVEFORM VARS
-var textMask, toMask;
+var textMask, toMask, toMaskImg;
 var wave,wave2,wave3;
   var t = 0;
   var delta = 0;
@@ -29,7 +33,11 @@ var wave,wave2,wave3;
   var waveUpper, waveLower,wiggleAmt = 0;
   
 //CLOUD VARS
-var clouds = [];
+var cloudsLarge = [];
+var cloudsSmall = [];
+
+//WIND VARS
+
 
 function preload() {
   calibre = loadFont('assets/Calibre-Black.otf');
@@ -40,39 +48,56 @@ function preload() {
 function setup() {
   pixelDensity(density);
   createCanvas(windowWidth*density,windowHeight*density);
-  frameRate(60);
+  frameRate(40);
   colorSys();
+  initBTN = createButton("WEATHER");
 }
 
 function draw() {
+  textSizeUpdate();
+  background(colorTime);
+  
+  if (textIsGood) {
+  
   var minutes = minute();
   if (frameCount === 0 || minutes === 0) {
     colorSys();
     gotWeather();
   }
   
-  textSizeUpdate();
-  background(colorTime);
-  shadow();
-  //image(shadowBuffer,0,0,windowWidth,windowHeight);
   makeWaves();
-
- var cloudCount = map(cloudAmt,0,100,0,20);
+  if (shadowRefresh) {
+  shadow();
+  }
+  image(toMaskImg);
+  
+ var cloudCount = map(cloudAmt,0,100,0,30);
  
- if (textIsGood) {
-   if (cloudAmt>20) {
-  if (clouds.length < cloudCount){
-  for (var i=0; i<=cloudCount; i++) {
-    clouds.push(new Cloud(random(0,windowWidth),0));
+
+  if (cloudAmt>20) {
+    if (cloudsSmall.length < cloudCount){
+      for (var i=0; i<=cloudCount; i++) {
+        cloudsSmall.push(new Cloud(random(0,windowWidth),0,.5,true));
+      }
     }
+  for ( i=0; i<cloudsSmall.length; i++) {
+    cloudsSmall[i].drawCloud();
+    cloudsSmall[i].move();
   }
-  for ( i=0; i<cloudCount; i++) {
-    randomSeed(i*10);
-    clouds[i].drawCloud();
-    clouds[i].move();
+  //LARGE CLOUDS
+  if (cloudAmt > 50) {
+  if (cloudsLarge.length < cloudCount/4){
+      for (var i=0; i<=cloudCount/4; i++) {
+        cloudsLarge.push(new Cloud(random(0,windowWidth),0,1,true));
+      }
+    }
+  for ( i=0; i<cloudsLarge.length; i++) {
+    cloudsLarge[i].drawCloud();
+    cloudsLarge[i].move();
   }
  }
  }
+
  
  print(frameRate());
   
@@ -84,6 +109,7 @@ function draw() {
   }
 
 }
+}
 
 
 //PARSE WEATHER DATA
@@ -94,6 +120,7 @@ function gotWeather(weather) {
   
   displayText = weather.name;
   displayText = displayText.toUpperCase();
+  //displayText = '7:24';
   
   sunriseDate = new Date(weather.sys.sunrise*1000);
   sunriseHours = sunriseDate.getHours() ;
@@ -156,105 +183,148 @@ function colorSys() {
 }
 
 
+// Extend p5.Image, adding the converse of "mask", naming it "punchOut":
+p5.Image.prototype.punchOut = function(p5Image) {
+ 
+    if(p5Image === undefined){
+        p5Image = this;
+    }
+    var currBlend = this.drawingContext.globalCompositeOperation;
+ 
+    var scaleFactor = 1;
+    if (p5Image instanceof p5.Graphics) {
+        scaleFactor = p5Image._pInst._pixelDensity;
+    }
+ 
+    var copyArgs = [
+        p5Image,
+        0,
+        0,
+        scaleFactor*p5Image.width,
+        scaleFactor*p5Image.height,
+        0,
+        0,
+        this.width,
+        this.height
+    ];
+ 
+    this.drawingContext.globalCompositeOperation = "destination-out";
+    this.copy.apply(this, copyArgs);
+    this.drawingContext.globalCompositeOperation = currBlend;
+};
+
 //DRAW TEXT SHADOW
+
 function shadow() {
-  //shadowBuffer = createGraphics(windowWidth,windowHeight);
-  //shadowBuffer.pixelDensity(2);
-  textSize(textSizeFinal);
-  textFont(calibre);
-  textAlign(CENTER,CENTER);
-  stroke(colorTimeInv);
-  fill(colorTime);
- strokeWeight(2.5);
-  
-  for (var i=12; i>=0; i-=3) {
-    text(displayText,windowWidth/2+i*.9,windowHeight/2+i*1.8);
-  }
-  
-  noStroke();
-}
-
-
-//DRAW INNER WAVES
-function makeWaves() {
-
   textMask =  createGraphics(windowWidth,windowHeight);
   textMask.pixelDensity(2);
   textMask.noStroke();
+  //textMask.fill(0);
+  //textMask.rect(-10,-10,textMask.width*1.1,textMask.height*1.1);
   textMask.fill(255);
   textSize(textSizeFinal);
   textMask.textFont(calibre);
   textAlign(CENTER,CENTER);
   textMask.text(displayText,textMask.width/2,textMask.height/2);
-
-  wave = createGraphics(windowWidth*density,windowHeight*density);
-    wave.beginShape();
-    wave.fill(color3);
-    wave.noStroke();
-    wave.vertex(0,height/2);
-    //wave.curveVertex(0,-height/2);
-    for (i=-10; i<=windowWidth; i+=windowWidth*freq) {
-      var yPos = map(noise(i),0,1,waveUpper,waveLower);
-       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
-      wave.curveVertex(i,yPos+delta);
+  
+  shadowBuffer = createGraphics(windowWidth,windowHeight);
+  shadowBuffer.pixelDensity(2);
+  shadowBuffer.fill(colorTime);
+  shadowBuffer.rect(-10,-10,shadowBuffer.width*1.1,shadowBuffer.height*1.1);
+  shadowBuffer.textSize(textSizeFinal);
+  shadowBuffer.textFont(calibre);
+  textAlign(CENTER,CENTER);
+  shadowBuffer.stroke(colorTimeInv);
+  shadowBuffer.fill(colorTime);
+  shadowBuffer.strokeWeight(2.5);
+  
+  for (var i=12; i>=0; i-=3) {
+    if (i===0) {
+      shadowBuffer.noStroke();
     }
-    wave.vertex(width,height+20);
-    wave.vertex(-20,height+20);
-    wave.endShape(CLOSE);
-    
-    wave.beginShape();
-    wave.fill(color2);
-    wave.noStroke();
-    wave.vertex(0,height/2+waveOffset);
-    for ( i=-10; i<=windowWidth; i+=windowWidth*freq) {
-       yPos = map(noise(i),0,1,waveUpper,waveLower);
-       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
-      wave.curveVertex(i,yPos+delta+waveOffset);
-    }
-    wave.vertex(width,height+20+waveOffset);
-    wave.vertex(-20,height+20+waveOffset);
-    wave.endShape(CLOSE);
-    
-    wave.beginShape();
-    wave.fill(color1);
-    wave.noStroke();
-    wave.vertex(0,height/2+waveOffset*2);
-    for ( i=-10; i<=windowWidth; i+=windowWidth*freq) {
-       yPos = map(noise(i),0,1,waveUpper,waveLower);
-       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
-      wave.curveVertex(i,yPos+delta+waveOffset*2);
-    }
-    wave.vertex(width,height+20+waveOffset*2);
-    wave.vertex(-20,height+20+waveOffset*2);
-    wave.endShape(CLOSE);
-    
-    t+=.01;
-    
+    shadowBuffer.text(displayText,windowWidth/2+i*.9,windowHeight/2+i*1.8);
+  }
+  
+  noStroke();
+  
   toMask = createGraphics(windowWidth*2,windowHeight*2);
   toMask.pixelDensity(density);
   toMask.background(colorBase);
-  toMask.image(wave,0,0,windowWidth,windowHeight);
+  toMask.image(shadowBuffer,0,0,windowWidth,windowHeight);
 
-  var toMaskImg = toMask.get();
-  toMaskImg.mask(textMask._renderer);
-  image(toMaskImg);
+  toMaskImg = toMask.get();
+  toMaskImg.punchOut(textMask._renderer);
+  
+  shadowRefresh = false;
+}
+
+
+//DRAW INNER WAVES
+function makeWaves() {
+  fill(colorBase);
+  rect(-10,10,windowWidth*1.1,windowHeight*1.1);
+  //wave = createGraphics(windowWidth*density,windowHeight*density);
+    beginShape();
+    fill(color3);
+    noStroke();
+    vertex(0,height/2);
+    for (i=-10; i<=windowWidth; i+=windowWidth*freq) {
+      var yPos = map(noise(i),0,1,waveUpper,waveLower);
+       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
+      curveVertex(i,yPos+delta);
+    }
+    vertex(width,height+20);
+    vertex(-20,height+20);
+    endShape(CLOSE);
+    
+    beginShape();
+    fill(color2);
+    noStroke();
+    vertex(0,height/2+waveOffset);
+    for ( i=-10; i<=windowWidth; i+=windowWidth*freq) {
+       yPos = map(noise(i),0,1,waveUpper,waveLower);
+       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
+      curveVertex(i,yPos+delta+waveOffset);
+    }
+    vertex(width,height+20+waveOffset);
+    vertex(-20,height+20+waveOffset);
+    endShape(CLOSE);
+    
+    beginShape();
+    fill(color1);
+    noStroke();
+    vertex(0,height/2+waveOffset*2);
+    for ( i=-10; i<=windowWidth; i+=windowWidth*freq) {
+       yPos = map(noise(i),0,1,waveUpper,waveLower);
+       delta = map(noise(i+t),0,1,-wavePulse,wavePulse);
+      curveVertex(i,yPos+delta+waveOffset*2);
+    }
+    vertex(width,height+20+waveOffset*2);
+    vertex(-20,height+20+waveOffset*2);
+    endShape(CLOSE);
+    
+    t+=.01;
+    
+  //image(wave,0,0,windowWidth,windowHeight);
   }
   
   
 //CLOUD OBJECTS
-  
-  
-  function Cloud(xPos,yPos) {
+  function Cloud(xPos,yPos,cloudScale,cloudShadowOn) {
+    this.cloudScale = cloudScale;
     this.x = xPos+random(-500,windowWidth);
-    this.y = yPos+random(windowHeight/2-textSizeFinal*.83,windowHeight/2+textSizeFinal*.55);
-    this.cloudLength = random(windowWidth*.009,windowWidth*.2);
-    this.cloudSize= random(textSizeFinal*.1,textSizeFinal*.5);
+    this.y = yPos+random(windowHeight/2-textSizeFinal*.7*cloudScale,windowHeight/2+textSizeFinal*.5*cloudScale);
+    this.cloudShadowOn = cloudShadowOn;
+    this.cloudLength = random(windowWidth*.0009*cloudScale,windowWidth*.2*cloudScale);
+    this.cloudSize= random(textSizeFinal*.4*cloudScale,textSizeFinal*.55*cloudScale);
     
     this.drawCloud = function() {
       strokeCap(ROUND);
+      if (cloudShadowOn) {
       stroke(cloudShadow);
       strokeWeight(this.cloudSize);
       line(this.x+this.cloudSize*.5,this.y+this.cloudSize*.3,this.x+this.cloudLength+this.cloudSize*.5,this.y+this.cloudSize*.3);
+      }
       stroke(colorTimeInv);
       strokeWeight(this.cloudSize);
       line(this.x,this.y,this.x+this.cloudLength,this.y);
@@ -264,7 +334,7 @@ function makeWaves() {
     }
    
     this.move = function() {
-      this.x=this.x + map(this.cloudSize,0,80,0,windowWidth*.001) ;
+      this.x=this.x + map(this.cloudSize,0,80,0,windowWidth*.0003) ;
       if (this.x >windowWidth) {
         this.x = random(-400,-200);
       }
@@ -277,8 +347,10 @@ function windowResized() {
   resizeCanvas(windowWidth*density, windowHeight*density);
   
   textIsGood = false;
-    clouds.splice(0,clouds.length);
-  
+    cloudsSmall.splice(0,cloudsSmall.length);
+    cloudsLarge.splice(0,cloudsLarge.length);
+    
+  shadowRefresh = true;
 }
 
 function textSizeUpdate() {
@@ -290,12 +362,15 @@ function textSizeUpdate() {
   }
   
   else if (windowWidth > 400) {
-   if (contentWidth < windowWidth*.8) {
+   if (contentWidth < windowWidth*.8 && textSizeFinal < 350) {
     textSizeFinal = textSizeFinal+10;
   }
   }
   
-   if (windowWidth > 400 && windowWidth*.8<contentWidth && contentWidth<windowWidth*.9 || windowWidth<400) {
+   if (windowWidth > 400  && contentWidth<windowWidth*.9) {
+    textIsGood = true;
+  }
+  else if (windowWidth<400) {
     textIsGood = true;
   }
   
