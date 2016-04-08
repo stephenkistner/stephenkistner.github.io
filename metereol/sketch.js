@@ -9,7 +9,7 @@ var weatherReloaded = false;
 //WEATHER DATA VARS
 var zip = 10012;
 var weather, url;
-var temperature, cloudAmt;
+var temperature, cloudAmt, condition, humidity;
 var sunriseDate,sunriseHours,sunsetDate,sunsetHours,dataDate,dataHours;
 var nighttime = false;
 
@@ -90,7 +90,6 @@ function runSketch() {
 
 function draw() {
   colorSys();
-  print(displayText);
   if (initSketch) {
   textSizeUpdate();
   
@@ -138,7 +137,8 @@ function draw() {
  }
 
  
- print(frameRate());
+
+ statsDisp();
   
   if (nighttime) {
     blendMode(MULTIPLY);
@@ -153,26 +153,40 @@ function draw() {
 
 
 //PARSE WEATHER DATA
-function gotWeather(weather) {
-  temperature = weather.main.temp;
+function gotWeather(weatherI) {
+  temperature = weatherI.main.temp;
 
-  cloudAmt = weather.clouds.all;
+  cloudAmt = weatherI.clouds.all;
   
-  displayText = weather.name;
+  displayText = weatherI.name;
   displayText = displayText.toUpperCase();
   //displayText = '7:24';
+  condition = String(weatherI.weather[0].description);
+  condition = condition.toUpperCase();
   
-  sunriseDate = new Date(weather.sys.sunrise*1000);
+  humidity = weatherI.main.humidity;
+  
+  sunriseDate = new Date(weatherI.sys.sunrise*1000);
   sunriseHours = sunriseDate.getHours() ;
-  sunsetDate = new Date(weather.sys.sunset*1000);
+  sunsetDate = new Date(weatherI.sys.sunset*1000);
   sunsetHours = sunsetDate.getHours();
-  dataDate = new Date(weather.dt*1000);
+  dataDate = new Date(weatherI.dt*1000);
   dataHours = dataDate.getHours() ;
-  dataHours = 12;
+  //dataHours = 12;
     colorSys();
     
     weatherReloaded = true;
     runSketch();
+}
+
+function statsDisp() {
+  noStroke();
+  textSize(20);
+  textFont(calibre);
+  fill(colorTimeInv);
+  text('TEMP:\20' + int(temperature) + '\xB0',10,windowHeight-100);
+  text(condition,10,windowHeight-75);
+  text('HUMIDITY:\20' + humidity + '%',10,windowHeight-50);
 }
 
 
