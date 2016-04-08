@@ -2,6 +2,8 @@ var density = 1;
 
 //INTERFACE 
 var initBTN;
+var initSketch = false;
+var zipInput;
 
 //WEATHER DATA VARS
 var zip = 90210;
@@ -45,22 +47,45 @@ function preload() {
   loadJSON(url, gotWeather);
 }
 
+function openINIT() {
+  zipInput = createInput('');
+  zipInput.attribute("placeholder", "ZIP CODE");
+  zipInput.addClass('zipInput');
+  initBTN = createButton("GET WEATHER");
+  //initBTN.position(windowWidth/2,windowHeight/2);
+  initBTN.addClass('initBTN')
+  initBTN.mousePressed(runSketch);
+}
+
 function setup() {
   pixelDensity(density);
   createCanvas(windowWidth*density,windowHeight*density);
   frameRate(40);
-  colorSys();
-  initBTN = createButton("WEATHER");
+  //colorSys();
+  openINIT();
+}
+
+function runSketch() {
+  ;
+  //initBTN.addClass('hidden');
+  zip = zipInput.value();
+  url = 'http://api.openweathermap.org/data/2.5/weather?zip=' + zip + '&units=imperial&APPID=dbc1eb3f8bcd39cf9ae676b83e2e514c';
+  loadJSON(url, gotWeather);
+  initSketch = true
+  gotWeather();
+  shadowRefresh = true;
 }
 
 function draw() {
+  print(displayText);
+  if (initSketch) {
   textSizeUpdate();
   background(colorTime);
   
   if (textIsGood) {
   
   var minutes = minute();
-  if (frameCount === 0 || minutes === 0) {
+  if (minutes === 0) {
     colorSys();
     gotWeather();
   }
@@ -110,6 +135,7 @@ function draw() {
 
 }
 }
+}
 
 
 //PARSE WEATHER DATA
@@ -129,6 +155,7 @@ function gotWeather(weather) {
   dataDate = new Date(weather.dt*1000);
   dataHours = dataDate.getHours() ;
   //dataHours = 0.15;
+    colorSys();
 }
 
 
@@ -141,6 +168,7 @@ function colorSys() {
   if (sunriseHours<dataHours && dataHours<sunsetHours) {
     colorTime = color(255);
     colorTimeInv = color(0);
+    nighttime = false;
   }
   else if (dataHours<sunriseHours || dataHours>sunsetHours) {
     colorTime = color(0);
