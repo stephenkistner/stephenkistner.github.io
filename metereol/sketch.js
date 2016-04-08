@@ -155,7 +155,7 @@ function gotWeather(weather) {
   dataDate = new Date(weather.dt*1000);
   dataHours = dataDate.getHours() ;
   //dataHours = 0.15;
-    colorSys();
+    //colorSys();
 }
 
 
