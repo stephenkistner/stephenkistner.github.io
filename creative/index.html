@@ -2,15 +2,63 @@
 <html lang="en">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>Title Goes Here</title>
+<title>How to be creative.</title>
 
-
-
+<!-- href="http://stephenkistner.github.io/creative/?q=mark+economic+search+crush" -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 
 <body>
 
-<a href="http://stephenkistner.github.io/creative/?q=mark+economic+search+crush"><h1>How to be creative.</h1></a>
+<a id="title"><h1>How to be creative.</h1></a>
+
+<script>
+var el = document.getElementById('title');
+el.onclick = generate;
+
+function runSearch() {
+  alert('search');
+}
+
+
+var api = 'http://api.wordnik.com/v4/words.json/randomWord';
+var key = 'a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5';
+
+var corpus = 1000; // higher = less complex words
+var def = true; // only words with definitions ?
+
+function getWord(type, c) {
+    return $.get(
+        api +
+        '?includePartOfSpeech=' + type +
+        '&hasDictionaryDef=' + def +
+        '&minCorpusCount=' + corpus +
+        '&api_key=' + key
+    );
+}
+
+function link(res) {
+    var w = res[0].word;
+    //var upper = w.charAt(0).toUpperCase() + w.slice(1);
+
+    return w;
+}
+
+function generate() {
+    $.when(getWord('noun'), getWord('adjective'), getWord('noun'))
+    .then(function(a, b, c) {
+        var sentence =
+            '<h1>How to be ' + link(a) + ' ' +
+            link(b) + ' ' + link(c) + '.</h1>';
+        $('#title').html(sentence);
+        window.location.href = 'http://stephenkistner.github.io/creative/?q=' + link(a) + '+' + link(b) + '+' + link(c);
+    })
+    .fail(function() { alert('ERROR'); });
+}
+
+
+
+</script>
 
 <script>
   (function() {
@@ -29,6 +77,10 @@
 body {
   background-color: #000;
   font-family: Helvetica, Arial, sans-serif;
+}
+
+#title {
+  cursor: pointer;
 }
 
 h1 {
