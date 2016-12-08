@@ -31,7 +31,7 @@ var getQueryString = function ( field, url ) {
 titleComp = getQueryString('q');
 
 var setTitle = function(titleEnd) {
-  if (titleEnd !== '') {
+  if (titleEnd !== null) {
     $('#title').html('<h1>How to be'+titleEnd+'.</h1>');
   }
   else {
