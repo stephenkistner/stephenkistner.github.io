@@ -32,7 +32,7 @@ titleComp = getQueryString('q');
 
 var setTitle = function(titleEnd) {
   if (titleEnd !== null) {
-    var str = titleEnd.replace(new RegExp("\\+","g"),'');
+    var str = titleEnd.replace(new RegExp("\\+","g"),' ');
     $('#title').html('<h1>How to be '+str+'.</h1>');
   }
   else {
