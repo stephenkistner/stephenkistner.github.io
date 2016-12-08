@@ -31,11 +31,11 @@ var getQueryString = function ( field, url ) {
 titleComp = getQueryString('q');
 
 var setTitle = function(titleEnd) {
-  if (titleEnd == '') {
-    alert('null');
+  if (titleEnd !== '') {
+    $('#title').html('<h1>How to be'+titleEnd+'.</h1>');
   }
   else {
-    alert(titleEnd);
+    $('#title').html('<h1>How to be creative.</h1>');
   }
 }
 
@@ -76,7 +76,7 @@ function generate() {
         var sentence =
             '<h1>How to be ' + link(a) + ' ' +
             link(b) + ' ' + link(c) + '.</h1>';
-        $('#title').html(sentence);
+
         window.location.href = 'http://stephenkistner.github.io/creative/?q=' + link(a) + '+' + link(b) + '+' + link(c);
     })
     .fail(function() { alert('ERROR'); });
