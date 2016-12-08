@@ -25,6 +25,7 @@ var getQueryString = function ( field, url ) {
     var href = url ? url : window.location.href;
     var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
     var string = reg.exec(href);
+    string.replace("+", " ")
     return string ? string[1] : null;
 };
 
@@ -32,7 +33,7 @@ titleComp = getQueryString('q');
 
 var setTitle = function(titleEnd) {
   if (titleEnd !== null) {
-    $('#title').html('<h1>How to be'+titleEnd+'.</h1>');
+    $('#title').html('<h1>How to be '+titleEnd+'.</h1>');
   }
   else {
     $('#title').html('<h1>How to be creative.</h1>');
