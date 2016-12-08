@@ -12,9 +12,6 @@
 
 <a id="title"><h1>How to be creative.</h1></a>
 
-<iframe id="pageLoader"></iframe>
-
-
 <script>
 var el = document.getElementById('title');
 el.onclick = generate;
@@ -52,7 +49,7 @@ function generate() {
             '<h1>How to be ' + link(a) + ' ' +
             link(b) + ' ' + link(c) + '.</h1>';
         $('#title').html(sentence);
-        document.getElementById('pageLoader').src = 'http://stephenkistner.github.io/creative/?q=' + link(a) + '+' + link(b) + '+' + link(c);
+        window.location.href = 'http://stephenkistner.github.io/creative/?q=' + link(a) + '+' + link(b) + '+' + link(c);
     })
     .fail(function() { alert('ERROR'); });
 }
@@ -78,12 +75,6 @@ function generate() {
 body {
   background-color: #000;
   font-family: Helvetica, Arial, sans-serif;
-}
-
-#pageLoader {
-  width: 100%;
-  height: auto;
-  border: none;
 }
 
 #title {
