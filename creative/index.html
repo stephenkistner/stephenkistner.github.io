@@ -24,8 +24,8 @@
 var getQueryString = function ( field, url ) {
     var href = url ? url : window.location.href;
     var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
-    var string = reg.exec(href);
-    string = string.replace(/\+/g, " ")
+    var str = reg.exec(href);
+    string = str.replace(/\+/g, " ")
     return string ? string[1] : null;
 };
 
