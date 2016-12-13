@@ -9,7 +9,40 @@
 
  <body>
 
- <p>This is my web page</p>
+ <p id="displayMassage">This is my web page</p>
 
- </body> 
+ <a href='javascript:;' onclick='newMassage();'>More ></a>
+
+
+<!--<script src="massages.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ <script>
+var counter = 0;
+var lines;
+
+$(document).ready(function() {
+    //fetch text file
+    $.get('data.txt', function(data) {
+        //split on new lines
+        lines = data.split('\n\n');
+        }
+    });
+    newMassage();
+});
+
+//window.onload = newMassage;
+
+function setDefault() {
+  document.getElementById('displayMassage').innerHTML = data[0];
+}
+
+function newMassage() {
+   counter = Math.floor(Math.random() * lines.length);
+   document.getElementById('displayMassage').innerHTML = lines[counter];
+}
+
+ </script>
+
+
+ </body>
  </html>
