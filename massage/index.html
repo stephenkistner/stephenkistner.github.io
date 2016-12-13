@@ -18,13 +18,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  <script>
 var counter = 0;
-var lines = [];
+var strings;
 
 $(document).ready(function() {
     //fetch text file
     $.get('data.txt', function(data) {
         //split on new lines
-        lines = data.split('\n\n');
+        var lines = data.split('\n\n');
+        strings = lines;
     });
     newMassage();
 });
