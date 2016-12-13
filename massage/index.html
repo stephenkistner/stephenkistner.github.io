@@ -10,15 +10,24 @@
  var counter = 0;
  var lines = [];
 
- $.get('data.txt', function(data) {
-     //split on new lines
-     lines = data.split('\n\n');
+
 
  $(document).ready(function() {
      //fetch text file
-    newMassage();
-     });
+     runText();
  });
+
+ function runText() {
+   load();
+   $.when(load()).then(newMassage);
+ }
+
+ function load() {
+   return $.get('data.txt', function(data) {
+       //split on new lines
+       lines = data.split('\n\n');
+       });
+ }
 
 // $(window).load(newMassage);
 
