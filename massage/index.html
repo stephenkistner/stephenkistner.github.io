@@ -32,12 +32,12 @@ $(document).ready(function() {
 window.onload = newMassage;
 
 function setDefault() {
-  document.getElementById('displayMassage').innerHTML = lines[0];
+  document.getElementById('displayMassage').innerHTML = strings[0];
 }
 
 function newMassage() {
    counter = Math.floor(Math.random() * lines.length);
-   document.getElementById('displayMassage').innerHTML = lines[counter];
+   document.getElementById('displayMassage').innerHTML = strings[counter];
 }
 
  </script>
