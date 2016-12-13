@@ -10,7 +10,8 @@ body {
 #displayMassage {
   text-align: left;
   font-weight: bold;
-  margin: 0 20px;
+  margin: 1em 1em;
+  max-width: 80%;
 }
 
 #more {
@@ -20,5 +21,5 @@ body {
   text-align: center;
   margin-left: 50%;
   left: -300px;
-  margin-bottom: 10%;
+  margin-bottom: 1em;
 }
