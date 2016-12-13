@@ -4,12 +4,13 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-size: 2em;
+  font-size: 3em;
 }
 
 #displayMassage {
   text-align: left;
   font-weight: bold;
+  margin: 0 20px;
 }
 
 #more {
