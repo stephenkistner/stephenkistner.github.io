@@ -27,10 +27,9 @@ $(document).ready(function() {
         var lines = data.split('\n\n');
         strings = lines;
     });
-    newMassage();
 });
 
-//window.onload = newMassage;
+window.onload = newMassage;
 
 function setDefault() {
   document.getElementById('displayMassage').innerHTML = lines[0];
