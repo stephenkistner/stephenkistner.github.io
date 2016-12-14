@@ -1,10 +1,28 @@
+html, body {
+  height: 100%;
+}
+
 body {
+  width: 100%;
   background: #000;
   color: #fff;
   font-family: Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
   font-size: 3em;
+  filter: grayscale(100%);
+	 background-position: center;
+	 margin:auto;
+	 background-size:cover;
+}
+
+#graymaker {
+  width: 100%;
+  height: 100%;
+  background-blend-mode: multiply;
+  background-position: center;
+  background-size: cover;
+  z-index: -10;
 }
 
 a, a:hover, a:visited {
@@ -13,10 +31,14 @@ a, a:hover, a:visited {
 }
 
 #displayMassage {
+  position: absolute;
+  top: 0;
+  left: 0;
   text-align: left;
   font-weight: bold;
   margin: 1em 1em;
   max-width: 80%;
+  z-index: 100;
 }
 
 /*#btn-parent {

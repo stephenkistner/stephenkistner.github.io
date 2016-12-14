@@ -47,15 +47,20 @@
 
   </script>
 
+  <script src="randomflickr.js"></script>
+  <script src="https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=7177ae43badab8b5428ef2e2c7a66aac&license=7%2C8%2C2%2C4%2C5&sort=interestingness-desc&extras=url_c%2Clicense%2Cowner_name&per_page=500&format=json"></script>
+
  </head>
 
 
  <body>
 
+   <div id="graymaker"></div>
+
  <p id="displayMassage">The professional tends to classify and to specialize, to accept uncritically the ground rules of the environment. The ground rules provided by the mass response of his colleagues serves as a pervasive environment of which his is contentedly unaware.</p>
 
 <div id="btn-parent">
- <a id="more" href='javascript:;' onclick='newMassage();'>Massage Me</a>
+ <a id="more" href='javascript:;' onclick='newMassage(); randomBlend();'>Massage Me</a>
 </div>
 
 
