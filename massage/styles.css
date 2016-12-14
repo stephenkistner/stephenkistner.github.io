@@ -59,6 +59,7 @@ a, a:hover, a:visited {
   border-radius: .1em;
   opacity: 1;
   transition: transform .4s ease-in-out;
+  z-index: 200;
 }
 
 #more:hover {
@@ -76,6 +77,8 @@ a, a:hover, a:visited {
   left: 0;
   font-size: .25em;
   color: #fff;
+  margin: .5em 1.5em;
+  opacity: .6;
 }
 
 #licenses a {
