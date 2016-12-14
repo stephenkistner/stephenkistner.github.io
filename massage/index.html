@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
  <meta http-equiv="content-type" content="text/html; charset=utf-8">
- <title>Title Goes Here</title>
+ <title>Massage Me &mdash; A McLuhan Quote Generator</title>
 
  <link href="styles.css" rel="stylesheet">
 
@@ -19,6 +19,8 @@
  });
 
  function runText() {
+   var btnWidth = $(document.getElementById('more')).width();
+   document.getElementById('more').style['margin-left'] = "-" + btnWidth/2 + "px";
    load();
    $.when(load()).then(newMassage);
  }
@@ -52,8 +54,9 @@
 
  <p id="displayMassage">The professional tends to classify and to specialize, to accept uncritically the ground rules of the environment. The ground rules provided by the mass response of his colleagues serves as a pervasive environment of which his is contentedly unaware.</p>
 
+<div id="btn-parent">
  <a id="more" href='javascript:;' onclick='newMassage();'>Massage Me</a>
-
+</div>
 
 
 
