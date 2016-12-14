@@ -57,4 +57,28 @@ a, a:hover, a:visited {
   background: #fff;
   color: #000;
   border-radius: .1em;
+  opacity: 1;
+  transition: transform .4s ease-in-out;
+}
+
+#more:hover {
+  transform: scale(1.04);
+}
+
+#more:active {
+  transform: scale(.8);
+}
+
+#licenses {
+  position: absolute;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  font-size: .25em;
+  color: #fff;
+}
+
+#licenses a {
+  text-decoration: underline;
+  color: #fff;
 }
