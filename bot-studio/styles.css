@@ -58,14 +58,20 @@ body.dark {
   background: black;
 }
 
-.page-blog .page-bg {
+#page-bg {
   position: fixed;
   width: 110vw;
   height: 110vh;
   left: -5vw;
-  top: -10vh;
-  background: url(/assets/blog-bg-tilted.png) no-repeat top center;
+	top: 0;
+  background: no-repeat top center;
   background-size: cover;
+}
+.page-blog #page-bg {
+	background-image: url(/assets/blog-bg.png);
+}
+.page-tools #page-bg {
+	background-image: url(/assets/tools-bg.png);
 }
 
 ::selection {
@@ -255,7 +261,7 @@ code {
   margin: 0 auto;
   overflow-x: hidden;
 }
-.page-blog #postflow {
+.page-blog #postflow, .page-tools #postflow {
   padding-top: 35vh;
 }
 
@@ -316,8 +322,12 @@ a.postlink {
 }
 .card .date2 {
   position: absolute;
-  bottom: 0;
-  right: 17px;
+  bottom: 17px;
+  right: 20px;
+}
+
+.card .small {
+	margin-bottom: 0;
 }
 
 #article {
@@ -401,6 +411,11 @@ a.postlink {
       code {
         font-size: .889rem;
       }
+
+			#page-bg {
+				top: -10vh;
+			}
+
       #postflow {
         overflow-x: visible;
       }
@@ -463,7 +478,7 @@ a.postlink {
         padding: 0 30px;
       }
 
-      .page-blog #postflow {
+      .page-blog #postflow, .page-tools #postflow {
         padding-top: 60vh;
       }
 

@@ -14,24 +14,27 @@ var topHidden = false;
 
 
 // INI
-moveDate();
-scaleCards();
+setTimeout(function(){
+  moveDate();
+  scaleCards();
+}, 100);
 
-// COOL SCROLL ACTIONS
+
+// $$$$$$$$$$$$$$$$$$ COOL SCROLL ACTIONS $$$$$$$$$$$$$$$$$$$$$$$
 window.onscroll = function (e) {
   scrollOrig = scrollTop;
   scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-  if (document.getElementById('intro') !=null) {
+  if (document.getElementById('postflow') !=null) {
     fadeText();
   }
 
   if (Math.abs(scrollOrig - scrollTop) <= 5) {
-    toggleTopbar();
+    //toggleTopbar();
   }
   scaleCards();
 }
 
-// UPDATE CONTENT ON RESIZE
+// $$$$$$$$$$$$$$$$$$$$ UPDATE CONTENT ON RESIZE $$$$$$$$$$$$$$$$$$$$$
 window.onresize = function(e) {
   windowHeight = window.innerHeight;
   windowWidth = window.innerWidth;
@@ -46,14 +49,15 @@ window.onresize = function(e) {
 function fadeText() {
   firstPostY = posts[0].offsetTop - scrollTop;
   var transVal = map_range(firstPostY, windowHeight*.3, defaultPos, .2, 1);
-  document.getElementById('intro').style.opacity = transVal;
+  var bg = document.getElementById('intro') || document.getElementById('page-bg');
+  bg.style.opacity = transVal;
 }
 
 //Show and hide topbar on scroll
 function toggleTopbar() {
   if (scrollTop > scrollOrig && scrollTop >= 65) {
     topBar.classList.add('slide');
-  } else if (scrollTop < scrollOrig && scrollTop < 65) {
+  } else if (scrollTop < scrollOrig && scrollTop < 65 || scrollTop == 0) {
     topBar.classList.remove('slide');
   }
 }
@@ -63,11 +67,11 @@ function moveDate() {
   if (document.getElementById('article') !=null) {
     var dateElem = document.getElementById("byline-date");
     dateElem.style.marginRight = 0;
-    var datePosOrig = dateElem.getBoundingClientRect();
-    var contentPos = document.querySelector("#article > section:first-of-type > *:first-child").getBoundingClientRect();
-    if (contentPos.left > 50) {
-      var offset = datePosOrig.left - contentPos.left;
-      dateElem.style.marginRight = offset + 3 + "px";
+    var datePosOrig = dateElem.getBoundingClientRect().left;
+    var contentPos = document.querySelector("#article > section:first-of-type > *:first-child").getBoundingClientRect().left;
+    if (contentPos > 50) {
+      var offset = datePosOrig - contentPos;
+      dateElem.style.marginRight = offset + "px";
     }
   }
 }
@@ -75,29 +79,26 @@ function moveDate() {
 
 //Scale & translate Cards on entrance
 function scaleCards() {
+    // Desktop behavior
     if (windowWidth > 992 && document.getElementById('postflow') !==null) {
       for (i=0; i< posts.length; i++) {
+          //find card position
           var yPos = posts[i].offsetTop - scrollTop;
+          //determine scale value
           var scaleValue = 1;
           if (yPos > windowHeight*.6) {
             scaleValue = map_range(yPos, windowHeight*.6, windowHeight,1,.9);
           } else {
             scaleValue = map_range(yPos, 0, windowHeight*.6, 1.02,1);
           }
-          if (0<yPos<windowHeight*.6) {
-
-          }
-          //var scaleValue = 1.1*Math.pow(yPos,-.0476);
-          //var scaleValue = 1;
+          // shift Y position on scroll
           var yOffset = map_range(yPos, windowHeight*.2, windowHeight, -100, 150);
-          var xOffset = map_range(yPos,windowHeight*.5, windowHeight*1.1, 0, 75);
-          if (i%2 !== 0) {
-            xOffset = xOffset*-1;
-          }
-          //posts[i].style.transform = "scale(" + scaleValue + ") translateY(" + yOffset + "px) translateX(" + xOffset + "px)";
+          // apply transformations & reset opacity (mobile override)
           posts[i].style.transform = "scale(" + scaleValue + ") translateY(" + yOffset + "px)";
+          posts[i].style.opacity = 1;
       }
     }
+    // Mobile/default behavior
     else if (document.getElementById('postflow') !==null) {
       for (i=0; i<posts.length; i++) {
         var yPos = posts[i].offsetTop - scrollTop;
@@ -112,7 +113,7 @@ function scaleCards() {
 
 // %%%%%%%%%%%% UTILITIES %%%%%%%%%%%%%%%%
 
-//Translate a value in a range to another value in different range
+//Translate a value [i] in range [iL,iH] to relative value in range [oL,oH]
 function map_range(i,iL,iH,oL,oH, limit = true) {
   var newVal;
   if (limit) {
