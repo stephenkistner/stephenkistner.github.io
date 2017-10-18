@@ -1,39 +1,39 @@
 @font-face {
 	font-family: 'GT Cinetype';
-	src: url('assets/fonts/GTCinetype-RegularItalic.eot');
-	src: url('assets/fonts/GTCinetype-RegularItalic.eot?#iefix') format('embedded-opentype'),
-		url('assets/fonts/GTCinetype-RegularItalic.woff') format('woff'),
-		url('assets/fonts/GTCinetype-RegularItalic.ttf') format('truetype');
+	src: url('/bot-studio/assets/fonts/GTCinetype-RegularItalic.eot');
+	src: url('/bot-studio/assets/fonts/GTCinetype-RegularItalic.eot?#iefix') format('embedded-opentype'),
+		url('/bot-studio/assets/fonts/GTCinetype-RegularItalic.woff') format('woff'),
+		url('/bot-studio/assets/fonts/GTCinetype-RegularItalic.ttf') format('truetype');
 	font-weight: normal;
 	font-style: italic;
 }
 
 @font-face {
 	font-family: 'GT Cinetype';
-	src: url('assets/fonts/GTCinetype-BoldItalic.eot');
-	src: url('assets/fonts/GTCinetype-BoldItalic.eot?#iefix') format('embedded-opentype'),
-		url('assets/fonts/GTCinetype-BoldItalic.woff') format('woff'),
-		url('assets/fonts/GTCinetype-BoldItalic.ttf') format('truetype');
+	src: url('/bot-studio/assets/fonts/GTCinetype-BoldItalic.eot');
+	src: url('/bot-studio/assets/fonts/GTCinetype-BoldItalic.eot?#iefix') format('embedded-opentype'),
+		url('/bot-studio/assets/fonts/GTCinetype-BoldItalic.woff') format('woff'),
+		url('/bot-studio/assets/fonts/GTCinetype-BoldItalic.ttf') format('truetype');
 	font-weight: bold;
 	font-style: italic;
 }
 
 @font-face {
 	font-family: 'GT Cinetype';
-	src: url('assets/fonts/GTCinetype-Regular.eot');
-	src: url('assets/fonts/GTCinetype-Regular.eot?#iefix') format('embedded-opentype'),
-		url('assets/fonts/GTCinetype-Regular.woff') format('woff'),
-		url('assets/fonts/GTCinetype-Regular.ttf') format('truetype');
+	src: url('/bot-studio/assets/fonts/GTCinetype-Regular.eot');
+	src: url('/bot-studio/assets/fonts/GTCinetype-Regular.eot?#iefix') format('embedded-opentype'),
+		url('/bot-studio/assets/fonts/GTCinetype-Regular.woff') format('woff'),
+		url('/bot-studio/assets/fonts/GTCinetype-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'GT Cinetype';
-	src: url('assets/fonts/GTCinetype-Bold.eot');
-	src: url('assets/fonts/GTCinetype-Bold.eot?#iefix') format('embedded-opentype'),
-		url('assets/fonts/GTCinetype-Bold.woff') format('woff'),
-		url('assets/fonts/GTCinetype-Bold.ttf') format('truetype');
+	src: url('/bot-studio/assets/fonts/GTCinetype-Bold.eot');
+	src: url('/bot-studio/assets/fonts/GTCinetype-Bold.eot?#iefix') format('embedded-opentype'),
+		url('/bot-studio/assets/fonts/GTCinetype-Bold.woff') format('woff'),
+		url('/bot-studio/assets/fonts/GTCinetype-Bold.ttf') format('truetype');
 	font-weight: bold;
 	font-style: normal;
 }
@@ -68,10 +68,10 @@ body.dark {
   background-size: cover;
 }
 .page-blog #page-bg {
-	background-image: url(assets/blog-bg.png);
+	background-image: url(/bot-studio/assets/blog-bg.png);
 }
 .page-tools #page-bg {
-	background-image: url(assets/tools-bg.png);
+	background-image: url(/bot-studio/assets/tools-bg.png);
 }
 
 ::selection {
@@ -174,12 +174,12 @@ code {
   text-indent: -9999px;
   width: 275px;
   height: 22px;
-  background: url(assets/logo-white.png);
+  background: url(/bot-studio/assets/logo-white.png);
   background-size: contain;
   margin: 0 auto;
 }
 .light .logo {
-  background: url(assets/logo-black.png);
+  background: url(/bot-studio/assets/logo-black.png);
   background-size: contain;
 }
 #topbar {
