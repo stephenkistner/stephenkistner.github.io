@@ -88,6 +88,11 @@ h1 {
 body.dark h1 {
   color: white;
 }
+#about h1 {
+	margin-bottom: 1em;
+	margin-top: .5em;
+	line-height: 1.15;
+}
 h2 {
   font-size: 1.266rem;
   margin: 2em 0 .5em 0;
@@ -111,9 +116,21 @@ blockquote {
 
 a {
   text-decoration: none;
+	color: inherit;
+	background-image: linear-gradient(to right, black 75%, transparent 75%);
+  background-position: 0 1.04em;
+  background-repeat: repeat-x;
+  background-size: .3em .1em;
 }
 a:hover {
-  text-decoration: underline;
+  background-image: linear-gradient(to right, black 0%, black 100%);
+}
+.blacklite {
+	background-color: black;
+	color: white;
+	padding: 0 .2em .06em .2em;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
 }
 
 ul, ol {
@@ -172,7 +189,7 @@ code {
   top: 0;
   z-index: 999;
   padding: 21px 0;
-  transition: transform .3s ease-out;
+  transition: transform .25s ease-out;
 }
 #topbar.slide {
   transform: translateY(-65px);
@@ -198,6 +215,9 @@ code {
 #bottombar .logo {
   display: none;
 }
+#bottombar a {
+	background: none;
+}
 .navitem {
   display: flex;
   flex-flow: column;
@@ -214,9 +234,19 @@ code {
   margin: 8px 0 15px 0;
   font-size: .624rem;
   font-weight: bold;
+	padding: .2em .2em .15em .2em;
+}
+.navitem.active .navlabel {
+	background-color: white;
+	color: black;
+
 }
 .light .navlabel {
   color: black;
+}
+.light .navitem.active .navlabel {
+	background-color: black;
+	color: white;
 }
 
 .byline {
@@ -230,7 +260,7 @@ code {
   display: none;
 }
 .byline .line {
-  border-bottom: 2px solid black;
+  border-bottom: 2px dashed black;
   min-width: 50px;
   margin-left: 15px;
   height: 1px;
@@ -247,16 +277,24 @@ code {
   margin-top: 15vh;
   padding: 0 15px;
 }
+/*#intro a {
+	background-image: none;
+	padding: .1em .3em .2em .3em;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+	border: .1em dashed white;
+}*/
 
 .profile-pic {
   background: black;
   width: 30px;
   height: 30px;
-  border-radius: 30px;
+  border-radius: 50%;
 }
 
 #postflow {
-  padding: 65vh 0 10vh 0;
+  padding: 0 0 200px 0;
+	padding-top: calc(100vh - 220px);
   max-width: 1300px;
   margin: 0 auto;
   overflow-x: hidden;
@@ -284,9 +322,13 @@ a.postlink {
 .card a {
   text-decoration: none;
   color: inherit;
+	background: none;
 }
 .card .kicker {
   margin: 5px 0 1em 0;
+}
+.card .kickmoji {
+	margin-right: .5em;
 }
 .card .post-title {
   font-size: 1.266rem;
@@ -330,7 +372,7 @@ a.postlink {
 	margin-bottom: 0;
 }
 
-#article {
+#article, #about {
   padding: 60px 16px 150px 16px;
 }
 #article figure {
@@ -379,7 +421,7 @@ a.postlink {
         padding-left: 15px;
         padding-right: 15px;
       }
-      #article {
+      #article, #about {
         padding-left: 50px;
         padding-right: 50px;
       }
@@ -455,7 +497,7 @@ a.postlink {
         flex-flow: row;
         margin: 0 30px 24px 0;
       }
-      .navitem:hover .navlabel, .navitem.active .navlabel {
+      .navitem:hover .navlabel {
         text-decoration: underline;
       }
       .nav-home {
@@ -510,7 +552,7 @@ a.postlink {
         display: block;
       }
 
-      #article {
+      #article, #about {
         padding: 0 40px 115px 40px;
       }
       #article section {

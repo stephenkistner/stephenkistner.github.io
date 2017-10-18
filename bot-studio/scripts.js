@@ -1,4 +1,5 @@
-var scrollTop, scrollOrig = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+var scrollOrig = scrollTop;
 
 if (document.getElementById('postflow') !=null) {
   var posts = document.getElementById('postflow').children;
@@ -10,7 +11,6 @@ var windowHeight = window.innerHeight;
 var windowWidth = window.innerWidth;
 
 var topBar = document.getElementById('topbar');
-var topHidden = false;
 
 
 // INI
@@ -28,9 +28,8 @@ window.onscroll = function (e) {
     fadeText();
   }
 
-  if (Math.abs(scrollOrig - scrollTop) <= 5) {
-    //toggleTopbar();
-  }
+  toggleTopbar();
+
   scaleCards();
 }
 
@@ -44,7 +43,6 @@ window.onresize = function(e) {
 
 
 // ############## FUNCTIONS ##################
-
 //Fade intro text when cards scroll above
 function fadeText() {
   firstPostY = posts[0].offsetTop - scrollTop;
@@ -52,16 +50,24 @@ function fadeText() {
   var bg = document.getElementById('intro') || document.getElementById('page-bg');
   bg.style.opacity = transVal;
 }
-
 //Show and hide topbar on scroll
 function toggleTopbar() {
-  if (scrollTop > scrollOrig && scrollTop >= 65) {
+  if (document.getElementById('postflow') !=null) {
+    firstPostY = posts[0].offsetTop - scrollTop;
+    if (firstPostY <=65) {
+      topBar.classList.add('slide');
+    }
+    else {
+      topBar.classList.remove('slide');
+    }
+  }
+  else if (scrollTop > scrollOrig && scrollTop >= 10) {
     topBar.classList.add('slide');
-  } else if (scrollTop < scrollOrig && scrollTop < 65 || scrollTop == 0) {
+  }
+  else if (scrollTop < scrollOrig && scrollTop < 10) {
     topBar.classList.remove('slide');
   }
 }
-
 //Position byline date correctly on articles
 function moveDate() {
   if (document.getElementById('article') !=null) {
