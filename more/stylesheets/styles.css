@@ -1,22 +1,22 @@
 @font-face {
   font-family: "Octopuss";
-  src: url("/fonts/Octopuss.svg#Octopuss") format("svg");
-  src: url("/fonts/Octopuss.eot");
-  src: url("/fonts/Octopuss.eot?#iefix") format("embedded-opentype"), url("/fonts/Octopuss.woff") format("woff"), url("/fonts/Octopuss.ttf") format("truetype");
+  src: url("/more/fonts/Octopuss.svg#Octopuss") format("svg");
+  src: url("/more/fonts/Octopuss.eot");
+  src: url("/more/fonts/Octopuss.eot?#iefix") format("embedded-opentype"), url("/fonts/Octopuss.woff") format("woff"), url("/fonts/Octopuss.ttf") format("truetype");
   font-style: normal;
   font-weight: normal; }
 @font-face {
   font-family: "Souvenir";
-  src: url("/fonts/SouvenirStd-Light.svg#Souvenir") format("svg");
-  src: url("/fonts/SouvenirStd-Light.eot");
-  src: url("/fonts/SouvenirStd-Light.eot?#iefix") format("embedded-opentype"), url("/fonts/SouvenirStd-Light.woff") format("woff"), url("/fonts/SouvenirStd-Light.ttf") format("truetype");
+  src: url("/more/fonts/SouvenirStd-Light.svg#Souvenir") format("svg");
+  src: url("/more/fonts/SouvenirStd-Light.eot");
+  src: url("/more/fonts/SouvenirStd-Light.eot?#iefix") format("embedded-opentype"), url("/fonts/SouvenirStd-Light.woff") format("woff"), url("/fonts/SouvenirStd-Light.ttf") format("truetype");
   font-style: normal;
   font-weight: normal; }
 @font-face {
   font-family: "Souvenir";
-  src: url("/fonts/SouvenirStd-Demi.svg#Souvenir") format("svg");
-  src: url("/fonts/SouvenirStd-Demi.eot");
-  src: url("/fonts/SouvenirStd-Demi.eot?#iefix") format("embedded-opentype"), url("/fonts/SouvenirStd-Demi.woff") format("woff"), url("/fonts/SouvenirStd-Demi.ttf") format("truetype");
+  src: url("/more/fonts/SouvenirStd-Demi.svg#Souvenir") format("svg");
+  src: url("/more/fonts/SouvenirStd-Demi.eot");
+  src: url("/more/fonts/SouvenirStd-Demi.eot?#iefix") format("embedded-opentype"), url("/fonts/SouvenirStd-Demi.woff") format("woff"), url("/fonts/SouvenirStd-Demi.ttf") format("truetype");
   font-style: normal;
   font-weight: bold; }
 html {
