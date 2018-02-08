@@ -119,7 +119,7 @@ body {
   position: absolute;
   bottom: 0;
   right: 5vw;
-  cursor: url(/img/hand.png), auto; }
+  cursor: url(/more/img/hand.png), auto; }
 
 .popup, #blankpopup, #schedule {
   width: 45vw;
